@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="./styles/styles.css">
-    
+
 
     <title>Primer Parcial</title>
 </head>
+
 <body>
     <!-- Formulario de Filtros y Datos -->
     <section id="form-datos">
@@ -28,10 +30,10 @@
         <div class="columnas-ocultar">
             <input type="checkbox" id="col-id" checked>
             <label for="col-id">ID</label>
-            
+
             <input type="checkbox" id="col-nombre" checked>
             <label for="col-nombre">Nombre</label>
-            
+
             <input type="checkbox" id="col-apellido" checked>
             <label for="col-apellido">Apellido</label>
 
@@ -41,17 +43,17 @@
             <input type="checkbox" id="col-equipo" checked>
             <label for="col-equipo-titulo">Equipo</label>
 
-            <input type="checkbox" id="col-titulo" checked>
-            <label for="col-equipo-titulo">Titulo</label>
-
             <input type="checkbox" id="col-posicion" checked>
             <label for="col-posicion">Posicion</label>
 
-            <input type="checkbox" id="col-facultad" checked>
-            <label for="col-facultad">Facultad</label>
-            
             <input type="checkbox" id="col-cant-goles" checked>
             <label for="col-cant-Goles">Cantidad Goles</label>
+
+            <input type="checkbox" id="col-titulo" checked>
+            <label for="col-equipo-titulo">Titulo</label>
+
+            <input type="checkbox" id="col-facultad" checked>
+            <label for="col-facultad">Facultad</label>
 
             <input type="checkbox" id="col-anio-graduacion" checked>
             <label for="col-anio-graduacion">Año Graduacion</label>
@@ -102,26 +104,26 @@
             <input type="text" id="txtApellido" required>
 
             <label for="txtEdad">Edad</label>
-            <input type="number" id="txtEdad" min="0" required>
+            <input type="number" id="txtEdad" required>
 
             <label for="txtEquipo">Equipo</label>
             <input type="text" id="txtEquipo">
-            
+
             <label for="txtPosicion">Posicion</label>
             <input type="text" id="txtPosicion">
-            
+
             <label for="txtCantGoles">Cantidad Goles</label>
-            <input type="number" id="txtCantGoles" min="0" required>
+            <input type="number" id="txtCantGoles">
 
             <label for="txtTitulo">Titulo</label>
             <input type="text" id="txtTitulo">
-            
+
             <label for="txtFacultad">Facultad</label>
-            <input type="text" id="txtFacultad">    
-            
+            <input type="text" id="txtFacultad">
+
             <label for="txtAnioGraduacion">Anio Graduacion</label>
-            <input type="number" id="txtAnioGraduacion" min="0" required>
-            
+            <input type="number" id="txtAnioGraduacion">
+
             <button class="btn-guardar" id="btn-guardar" type="submit">Guardar</button>
             <button class="btn-cancelar" id="btn-cancelar" type="button">Cancelar</button>
         </form>
@@ -130,4 +132,5 @@
 
     <script type="module" src="./js/index.js"></script>
 </body>
+
 </html>

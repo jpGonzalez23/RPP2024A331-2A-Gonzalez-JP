@@ -1,27 +1,24 @@
 import { Futbolista } from "./models/Futbolista.js";
 import { Profecional } from "./models/Profecional.js";
 
-let data = '[{"id":1, "nombre":"Marcelo", "apellido":"Luque", "edad":45, "titulo":"Ingeniero", "facultad":"UTN","anioGraduacion":2002},{"id":2, "nombre":"Ramiro", "apellido":"Escobar", "edad":35, "titulo":"Medico","facultad":"UBA", "anioGraduacion":20012},{"id":3, "nombre":"Facundo", "apellido":"Cairo", "edad":30,"titulo":"Abogado", "facultad":"UCA", "anioGraduacion":2017},{"id":4, "nombre":"Fernando", "apellido":"Nieto","edad":18, "equipo":"Independiente", "posicion":"Delantero", "cantidadGoles":7},{"id":5, "nombre":"Manuel","apellido":"Loza", "edad":20, "equipo":"Racing", "posicion":"Volante", "cantidadGoles":2},{"id":6, "nombre":"Nicolas","apellido":"Serrano", "edad":23, "equipo":"Boca", "posicion":"Arquero", "cantidadGoles":0}]';
+let data = '[{"id":1, "nombre":"Marcelo", "apellido":"Luque", "edad":45, "titulo":"Ingeniero", "facultad":"UTN","anioGraduacion":2002},{"id":2, "nombre":"Ramiro", "apellido":"Escobar", "edad":35, "titulo":"Medico","facultad":"UBA", "anioGraduacion":2012},{"id":3, "nombre":"Facundo", "apellido":"Cairo", "edad":30,"titulo":"Abogado", "facultad":"UCA", "anioGraduacion":2017},{"id":4, "nombre":"Fernando", "apellido":"Nieto","edad":18, "equipo":"Independiente", "posicion":"Delantero", "cantidadGoles":7},{"id":5, "nombre":"Manuel","apellido":"Loza", "edad":20, "equipo":"Racing", "posicion":"Volante", "cantidadGoles":2},{"id":6, "nombre":"Nicolas","apellido":"Serrano", "edad":23, "equipo":"Boca", "posicion":"Arquero", "cantidadGoles":0}]';
 const pJson = JSON.parse(data);
 
 let personas = pJson.map(p => {
-    if('equipo' in p && 'posicion' in p && 'cantidadGoles' in p) {
-        console.log(p);
-        return new Futbolista(p.id, p.nombre, p.apellido, p.edad, p.equipo, p.posicion, p.cantGoles);
-    } else if('titulo' in p && 'facultad' in p && 'anioGraduacion' in p) {
-        console.log(p);
+    if ('equipo' in p && 'posicion' in p && 'cantidadGoles' in p) {
+        return new Futbolista(p.id, p.nombre, p.apellido, p.edad, p.equipo, p.posicion, p.cantidadGoles);
+    } else if ('titulo' in p && 'facultad' in p && 'anioGraduacion' in p) {
         return new Profecional(p.id, p.nombre, p.apellido, p.edad, p.titulo, p.facultad, p.anioGraduacion);
     }
 });
 
-document.addEventListener("DOMContentLoaded", () => { 
+document.addEventListener("DOMContentLoaded", () => {
     const tablaPersona = document.getElementById('tabla-persona');
     const filtro = document.getElementById('filtrar');
     const formAbm = document.getElementById('form-abm');
     const formDatos = document.getElementById('form-datos');
     const abmForm = document.getElementById('abm-form');
     const volverBtn = document.getElementById('btn-volver');
-    const agregarBtn = document.getElementById('btn-guardar');
     const cancelarBtn = document.getElementById('btn-cancelar');
     const promedioPersona = document.getElementById('promedio-persona');
     const calcularPromedio = document.getElementById('btn-calcular');
@@ -31,8 +28,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const MostrarDatos = () => {
         tablaPersona.innerHTML = '';
         const filtradas = personas.filter(p => {
-            return filtro.value === 'todos' || 
-                (filtro.value === 'futbolista' && p instanceof Futbolista) || 
+            return filtro.value === 'todos' ||
+                (filtro.value === 'futbolista' && p instanceof Futbolista) ||
                 (filtro.value === 'profecional' && p instanceof Profecional);
         });
 
@@ -45,25 +42,24 @@ document.addEventListener("DOMContentLoaded", () => {
                 <td class="col-edad">${p.edad}</td>
                 <td class="col-equipo">${p.equipo || 'N/A'}</td>
                 <td class="col-posicion">${p.posicion || 'N/A'}</td>
-                <td class="col-cant-goles">${p.cantGoles || 'N/A'}</td>
+                <td class="col-cant-goles">${p.cantidadGoles > -1 ? p.cantidadGoles : 'N/A'}</td>
                 <td class="col-titulo">${p.titulo || 'N/A'}</td>
                 <td class="col-facultad">${p.facultad || 'N/A'}</td>
                 <td class="col-facultad">${p.anioGraduacion || 'N/A'}</td>
-
                 <td class="col-acciones">
-                    <button onclick="eliminar(${p.id})">Eliminar</button>
-                    <button onclick="editar(${p.id})">Editar</button>
+                    <button onclick="eliminarPersona(${p.id})">Eliminar</button>
+                    <button onclick="editarPersona(${p.id})">Editar</button>
                 </td>
             `;
             tablaPersona.appendChild(row);
         });
     };
 
-    const actualizarJsonData = () => { 
+    const actualizarJsonData = () => {
         data = JSON.stringify(personas);
     };
 
-    window.eliminar = function(id) {
+    window.eliminarPersona = function (id) {
         personas = personas.filter(p => p.id !== id);
         actualizarJsonData();
         MostrarDatos();
@@ -73,8 +69,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     calcularPromedio.addEventListener('click', () => {
         const filtradas = personas.filter(p => {
-            return filtro.value === 'todos' || 
-                (filtro.value === 'futbolista' && p instanceof Futbolista) || 
+            return filtro.value === 'todos' ||
+                (filtro.value === 'futbolista' && p instanceof Futbolista) ||
                 (filtro.value === 'profecional' && p instanceof Profecional);
         });
 
@@ -115,7 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const nombre = document.getElementById('txtNombre').value;
         const apellido = document.getElementById('txtApellido').value;
-        const edad = document.getElementById('txtEdad').value ? parseInt(document.getElementById('txtEdad').value) : null;
+        const edad = parseInt(document.getElementById('txtEdad').value);
         const equipo = document.getElementById('txtEquipo').value;
         const cantGoles = document.getElementById('txtCantGoles').value ? parseInt(document.getElementById('txtCantGoles').value) : null;
         const posicion = document.getElementById('txtPosicion').value;
@@ -124,21 +120,21 @@ document.addEventListener("DOMContentLoaded", () => {
         const anioGraduacion = document.getElementById('txtAnioGraduacion').value ? parseInt(document.getElementById('txtAnioGraduacion').value) : null;
         const tipo = document.getElementById('tipo').value;
 
-        if(!nombre || !apellido || !edad || !equipo || !titulo || !posicion || !facultad || !cantGoles || !anioGraduacion) {
+        if (!nombre || !apellido || !edad || !tipo) {
             alert('Todos los campos son obligatorios');
             return;
         }
 
-        if(editandoPersona) {
+        if (editandoPersona) {
             editandoPersona.nombre = nombre;
             editandoPersona.apellido = apellido;
             editandoPersona.edad = edad;
 
-            if(editandoPersona instanceof Futbolista) { 
+            if (editandoPersona instanceof Futbolista) {
                 editandoPersona.equipo = equipo;
                 editandoPersona.posicion = posicion;
-                editandoPersona.cantGoles = cantGoles;
-            }else if(editandoPersona instanceof Profecional) {
+                editandoPersona.cantidadGoles = cantGoles;
+            } else if (editandoPersona instanceof Profecional) {
                 editandoPersona.titulo = titulo;
                 editandoPersona.facultad = facultad;
                 editandoPersona.anioGraduacion = anioGraduacion;
@@ -148,9 +144,9 @@ document.addEventListener("DOMContentLoaded", () => {
             const id = personas.length > 0 ? personas[personas.length - 1].id + 1 : 1;
             let nuevaPersona = null;
 
-            if(tipo === 'futbolista') {
+            if (tipo === 'futbolista') {
                 nuevaPersona = new Futbolista(id, nombre, apellido, edad, equipo, posicion, cantGoles);
-            }else if(tipo === 'profecional') {
+            } else if (tipo === 'profecional') {
                 nuevaPersona = new Profecional(id, nombre, apellido, edad, titulo, facultad, anioGraduacion);
             }
 
@@ -163,32 +159,50 @@ document.addEventListener("DOMContentLoaded", () => {
         MostrarDatos();
     });
 
-    window.editar = function(id) {
-        const persona = personas.find(p => p.id === id);
+    window.editarPersona = function (id) {
+        const personaEditada = personas.find(p => p.id === id);
+        if (!personaEditada) return;
 
-        if(!persona) return;
-
-        editandoPersona = persona;
+        editandoPersona = personaEditada;
+        formDatos.style.display = 'none';
         formAbm.style.display = 'block';
-        formDatum.style.display = 'none';
 
-        document.getElementById('txtNombre').value = persona.nombre;
-        document.getElementById('txtApellido').value = persona.apellido;
-        document.getElementById('txtEdad').value = persona.edad;
+        document.getElementById('txtNombre').value = personaEditada.nombre;
+        document.getElementById('txtApellido').value = personaEditada.apellido;
+        document.getElementById('txtEdad').value = personaEditada.edad;
 
-        if(persona instanceof Futbolista) {
+        // Mostrar todos los campos primero
+        document.getElementById('txtEquipo').style.display = 'block';
+        document.getElementById('txtPosicion').style.display = 'block';
+        document.getElementById('txtCantGoles').style.display = 'block';
+        document.getElementById('txtTitulo').style.display = 'block';
+        document.getElementById('txtFacultad').style.display = 'block';
+        document.getElementById('txtAnioGraduacion').style.display = 'block';
+
+        if (personaEditada instanceof Futbolista) {
             document.getElementById('tipo').value = 'futbolista';
-            document.getElementById('txtEquipo').value = persona.equipo;
-            document.getElementById('txtPosicion').value = persona.posicion;
-            document.getElementById('txtCantGoles').value = persona.cantGoles;
-        }else if(persona instanceof Profecional) {
+            document.getElementById('txtEquipo').value = personaEditada.equipo;
+            document.getElementById('txtPosicion').value = personaEditada.posicion;
+            document.getElementById('txtCantGoles').value = personaEditada.goles; // Consistencia en el uso de 'goles'
+
+            // Ocultar campos no relevantes para Futbolista
+            document.getElementById('txtTitulo').style.display = 'none';
+            document.getElementById('txtFacultad').style.display = 'none';
+            document.getElementById('txtAnioGraduacion').style.display = 'none';
+
+        } else if (personaEditada instanceof Profecional) {
             document.getElementById('tipo').value = 'profecional';
-            document.getElementById('txtTitulo').value = persona.titulo;
-            document.getElementById('txtFacultad').value = persona.facultad;
-            document.getElementById('txtCantGoles').value = persona.anioGraduacion;
+            document.getElementById('txtTitulo').value = personaEditada.titulo;
+            document.getElementById('txtFacultad').value = personaEditada.facultad;
+            document.getElementById('txtAnioGraduacion').value = personaEditada.anioGraduacion;
+
+            // Ocultar campos no relevantes para Profecional
+            document.getElementById('txtEquipo').style.display = 'none';
+            document.getElementById('txtPosicion').style.display = 'none';
+            document.getElementById('txtCantGoles').style.display = 'none';
         }
 
-        document.getElementById('tipo').disable = true;
+        document.getElementById('tipo').disabled = true; // Deshabilitar el cambio de tipo
     };
 
     MostrarDatos();

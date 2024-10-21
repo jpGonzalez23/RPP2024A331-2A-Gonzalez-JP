@@ -3,13 +3,13 @@ import { Persona } from "./Persona.js";
 export class Futbolista extends Persona {
     equipo;
     posicion;
-    cantGoles;
+    cantidadGoles;
     
-    constructor(id, nombre, apellido, edad, equipo, posicion,  cantGoles) {
+    constructor(id, nombre, apellido, edad, equipo, posicion, cantGoles) {
         super(id, nombre, apellido, edad);
         this.posicion = posicion;
         this.equipo = equipo;
-        this.cantGoles =  cantGoles;
+        this.cantidadGoles =  cantGoles;
     }
 
     getEquipo() {
@@ -21,7 +21,7 @@ export class Futbolista extends Persona {
     }
 
     getGoles() {
-        return this.cantGoles;
+        return this.cantidadGoles;
     }
 
     setEquipo(equipo) {
@@ -36,14 +36,14 @@ export class Futbolista extends Persona {
         }
     }
 
-    setGoles(cantGoles) {
-        if (cantGoles > -1) {
-            this.cantGoles = cantGoles;
+    setGoles(cantidadGoles) {
+        if (cantidadGoles > -1) {
+            this.cantidadGoles = cantidadGoles;
         }
     }
 
     toString() {
-        return super.toString() + `${this.equipo} ${this.posicion} ${this.cantGoles}`;
+        return super.toString() + `${this.getEquipo()} ${this.getPosicion()} ${this.getGoles()}`;
     }
 
     toJson() {
